@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/dice.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,6 +20,8 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  TextEditingController controller = TextEditingController();
+  TextEditingController controller2 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,70 +42,121 @@ class _LogInState extends State<LogIn> {
         ],
       ),
       // 키보드가 textFormField를 가리지 않기 위해 사용
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 50)),
-            Center(
-              child: Image(
-                image: AssetImage('images/chef.gif'),
-                width: 250,
-                height: 200,
-              ),
-            ),
-            Form(
-              child: Theme(
-                data: ThemeData(
-                  primaryColor: Colors.blueGrey,
-                  inputDecorationTheme: InputDecorationTheme(
-                    labelStyle: TextStyle(
-                      color: Colors.blueGrey,
-                      fontSize: 16,
+      body: Builder(
+        builder: (context) {
+          return SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Padding(padding: EdgeInsets.only(top: 50)),
+                Center(
+                  child: Image(
+                    image: AssetImage('images/chef.gif'),
+                    width: 250,
+                    height: 200,
+                  ),
+                ),
+                Form(
+                  child: Theme(
+                    data: ThemeData(
+                      primaryColor: Colors.blueGrey,
+                      inputDecorationTheme: InputDecorationTheme(
+                        labelStyle: TextStyle(
+                          color: Colors.blueGrey,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(40),
+                      child: Column(
+                        children: <Widget>[
+                          TextField(
+                            controller: controller,
+                            decoration: InputDecoration(
+                              labelText: 'Enter "dice"',
+                            ),
+                            keyboardType:
+                                TextInputType.emailAddress, // 키보드타입 지정
+                          ),
+                          TextField(
+                            controller: controller2,
+                            decoration: InputDecoration(
+                              labelText: 'Enter Password',
+                            ),
+                            keyboardType: TextInputType.text,
+                            obscureText: true, // 패스워드 처리, 입력값 암호화
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          ButtonTheme(
+                            minWidth: 100,
+                            height: 50,
+                            child: ElevatedButton(
+                              child: Icon(
+                                Icons.arrow_forward,
+                                size: 30,
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.amber,
+                              ),
+                              onPressed: () {
+                                if (controller.text == 'dice' &&
+                                    controller2.text == '1234') {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              Dice()));
+                                } else if (controller.text == 'dice' &&
+                                    controller2.text != '1234') {
+                                  showSnackBar2(context);
+                                } else if (controller.text != 'dice' &&
+                                    controller2.text == '1234') {
+                                  showSnackBar3(context);
+                                } else {
+                                  showSnackBar(context);
+                                }
+                              },
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                child: Container(
-                  padding: EdgeInsets.all(40),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: 'Enter "dice"',
-                        ),
-                        keyboardType: TextInputType.emailAddress, // 키보드타입 지정
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: 'Enter Password',
-                        ),
-                        keyboardType: TextInputType.text,
-                        obscureText: true, // 패스워드 처리, 입력값 암호화
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      ButtonTheme(
-                        minWidth: 100,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Icon(
-                            Icons.arrow_forward,
-                            size: 30,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.amber,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
+}
+
+void showSnackBar(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text('로그인 정보를 다시 확인하세요', textAlign: TextAlign.center),
+    duration: Duration(seconds: 2),
+    backgroundColor: Colors.blueGrey,
+  ));
+}
+
+void showSnackBar2(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text('비밀번호가 일치하지 않습니다', textAlign: TextAlign.center),
+    duration: Duration(seconds: 2),
+    backgroundColor: Colors.blueGrey,
+  ));
+}
+
+void showSnackBar3(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(
+      'dice의 철자를 확인하세요',
+      textAlign: TextAlign.center,
+    ),
+    duration: Duration(seconds: 2),
+    backgroundColor: Colors.blueGrey,
+  ));
 }
