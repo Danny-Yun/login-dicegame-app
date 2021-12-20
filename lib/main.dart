@@ -41,91 +41,99 @@ class _LogInState extends State<LogIn> {
           ),
         ],
       ),
-      // 키보드가 textFormField를 가리지 않기 위해 사용
       body: Builder(
         builder: (context) {
-          return SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Padding(padding: EdgeInsets.only(top: 50)),
-                Center(
-                  child: Image(
-                    image: AssetImage('images/chef.gif'),
-                    width: 250,
-                    height: 200,
+          // GestureDetector - 사용자의 행동을 감지하는 위젯
+          return GestureDetector(
+            onTap: () {
+              // 화면을 탭하면 활성화된 포커스가 풀려서 키보드가 내려가게끔
+              FocusScope.of(context).unfocus();
+            },
+            // 키보드가 textFormField를 가리지 않게 하기 위해 사용
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Padding(padding: EdgeInsets.only(top: 50)),
+                  Center(
+                    child: Image(
+                      image: AssetImage('images/chef.gif'),
+                      width: 250,
+                      height: 200,
+                    ),
                   ),
-                ),
-                Form(
-                  child: Theme(
-                    data: ThemeData(
-                      primaryColor: Colors.blueGrey,
-                      inputDecorationTheme: InputDecorationTheme(
-                        labelStyle: TextStyle(
-                          color: Colors.blueGrey,
-                          fontSize: 16,
+                  Form(
+                    child: Theme(
+                      data: ThemeData(
+                        primaryColor: Colors.blueGrey,
+                        inputDecorationTheme: InputDecorationTheme(
+                          labelStyle: TextStyle(
+                            color: Colors.blueGrey,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(40),
+                        child: Column(
+                          children: <Widget>[
+                            TextField(
+                              // autofocus: true, // 화면에 접속하자마자 입력창 활성화
+                              controller: controller,
+                              decoration: InputDecoration(
+                                labelText: 'Enter "dice"',
+                              ),
+                              keyboardType:
+                                  TextInputType.emailAddress, // 키보드타입 지정
+                            ),
+                            TextField(
+                              controller: controller2,
+                              decoration: InputDecoration(
+                                labelText: 'Enter Password',
+                              ),
+                              keyboardType: TextInputType.text,
+                              obscureText: true, // 패스워드 처리, 입력값 암호화
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            ButtonTheme(
+                              minWidth: 100,
+                              height: 50,
+                              child: ElevatedButton(
+                                child: Icon(
+                                  Icons.arrow_forward,
+                                  size: 30,
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.amber,
+                                ),
+                                onPressed: () {
+                                  if (controller.text == 'dice' &&
+                                      controller2.text == '1234') {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                Dice()));
+                                  } else if (controller.text == 'dice' &&
+                                      controller2.text != '1234') {
+                                    showSnackBar2(context);
+                                  } else if (controller.text != 'dice' &&
+                                      controller2.text == '1234') {
+                                    showSnackBar3(context);
+                                  } else {
+                                    showSnackBar(context);
+                                  }
+                                },
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
-                    child: Container(
-                      padding: EdgeInsets.all(40),
-                      child: Column(
-                        children: <Widget>[
-                          TextField(
-                            controller: controller,
-                            decoration: InputDecoration(
-                              labelText: 'Enter "dice"',
-                            ),
-                            keyboardType:
-                                TextInputType.emailAddress, // 키보드타입 지정
-                          ),
-                          TextField(
-                            controller: controller2,
-                            decoration: InputDecoration(
-                              labelText: 'Enter Password',
-                            ),
-                            keyboardType: TextInputType.text,
-                            obscureText: true, // 패스워드 처리, 입력값 암호화
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          ButtonTheme(
-                            minWidth: 100,
-                            height: 50,
-                            child: ElevatedButton(
-                              child: Icon(
-                                Icons.arrow_forward,
-                                size: 30,
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.amber,
-                              ),
-                              onPressed: () {
-                                if (controller.text == 'dice' &&
-                                    controller2.text == '1234') {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              Dice()));
-                                } else if (controller.text == 'dice' &&
-                                    controller2.text != '1234') {
-                                  showSnackBar2(context);
-                                } else if (controller.text != 'dice' &&
-                                    controller2.text == '1234') {
-                                  showSnackBar3(context);
-                                } else {
-                                  showSnackBar(context);
-                                }
-                              },
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
