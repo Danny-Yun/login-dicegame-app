@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'dart:math'; // 난수 생성시 필요한 라이브러리
+import 'package:fluttertoast/fluttertoast.dart'; // 토스트 메시지 라이브러리
 
 class Dice extends StatefulWidget {
   @override
@@ -51,6 +52,7 @@ class _DiceState extends State<Dice> {
                   leftDice = Random().nextInt(6) + 1;
                   rightDice = Random().nextInt(6) + 1;
                 });
+                showToast("왼쪽: $leftDice, 오른쪽: $rightDice");
               },
             ),
           ),
@@ -58,4 +60,13 @@ class _DiceState extends State<Dice> {
       ),
     );
   }
+}
+
+void showToast(String message) {
+  Fluttertoast.showToast(
+      msg: message,
+      backgroundColor: Colors.white,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      textColor: Colors.black87);
 }
