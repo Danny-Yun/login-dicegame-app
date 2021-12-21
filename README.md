@@ -1,16 +1,9 @@
-# login_dice_app
+# :game_die: login_dice_app
 
-A new Flutter project.
+## :heavy_check_mark: [main.dart](https://github.com/Riudiu/flutter-practice/blob/master/login_dicegame_app/lib/main.dart)
 
-## Getting Started
+![login_dice_app1](https://user-images.githubusercontent.com/86466976/146861172-d61b6829-a722-4ed5-aca1-4f738e4e6d66.png)
 
-This project is a starting point for a Flutter application.
+## :heavy_check_mark: [dice.dart](https://github.com/Riudiu/flutter-practice/blob/master/login_dicegame_app/lib/main.dart)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![login_dice_app2](https://user-images.githubusercontent.com/86466976/146861175-d5d1ec5b-b2d0-43a6-80ed-c9879c7e97bf.png)
